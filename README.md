@@ -1,11 +1,30 @@
 # @hrgui/bunyan-cloud-logging-stdout-format
 
-Formats Bunyan logs to be used for Google Cloud Logging via stdout.
+Formats Bunyan logs that output to stdout to be easily picked up by Google Cloud Logging.
+_Note: it will make it harder for bunyan cli to parse because it does not contain "msg"_
 
 # Quickstart
 
 ```
 npm install @hrgui/bunyan-cloud-logging-stdout-format
+```
+
+```js
+const {
+  CloudLoggingStream,
+} = require("@hrgui/bunyan-cloud-logging-stdout-format");
+const bunyan = require("bunyan");
+
+const logger = bunyan.createLogger({
+  name: "myapp",
+  streams: [new CloudLoggingStream().stream("info")],
+});
+
+logger.info("hello world");
+```
+
+```bash
+{"timestamp":"2020-09-22T06:58:46.564Z","severity":"INFO","name":"myapp","hostname":"harman-comp.local","pid":20499,"level":30,"time":"2020-09-22T06:58:46.564Z","v":0,"message":"hello world"}
 ```
 
 # What's the difference between @google-cloud/logging-bunyan and this?
