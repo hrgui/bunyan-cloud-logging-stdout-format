@@ -71,8 +71,7 @@ export class CloudLoggingStream extends Writable {
 
   constructor(opts) {
     super(opts);
-
-    this.bunyanReadable = opts.bunyanReadable;
+    this.bunyanReadable = opts?.bunyanReadable || this.bunyanReadable;
   }
 
   stream(level) {
