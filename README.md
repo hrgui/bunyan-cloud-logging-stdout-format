@@ -1,7 +1,6 @@
 # @hrgui/bunyan-cloud-logging-stdout-format
 
 Formats Bunyan logs that output to stdout to be easily picked up by Google Cloud Logging.
-_Note: it will make it harder for bunyan cli to parse because it does not contain "msg"_
 
 # Quickstart
 

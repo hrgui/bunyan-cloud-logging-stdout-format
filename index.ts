@@ -67,6 +67,14 @@ export interface MonitoredResource {
 }
 
 export class CloudLoggingStream extends Writable {
+  bunyanReadable: boolean = false;
+
+  constructor(opts) {
+    super(opts);
+
+    this.bunyanReadable = opts.bunyanReadable;
+  }
+
   stream(level) {
     return { level, stream: this as Writable };
   }
@@ -83,9 +91,10 @@ export class CloudLoggingStream extends Writable {
       if (record.err && record.err.stack) {
         record.message = record.err.stack;
       } else if (record.msg) {
-        // Simply rename `msg` to `message`.
         record.message = record.msg;
-        delete record.msg;
+        if (!this.bunyanReadable) {
+          delete record.msg;
+        }
       }
     }
 
