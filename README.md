@@ -26,6 +26,33 @@ logger.info("hello world");
 {"timestamp":"2020-09-22T06:58:46.564Z","severity":"INFO","name":"myapp","hostname":"harman-comp.local","pid":20499,"level":30,"time":"2020-09-22T06:58:46.564Z","v":0,"message":"hello world"}
 ```
 
+## bunyan-cli doesn't work.
+
+This is because Cloud Logging prefers `message` over `msg`. This module supports writing to both `message` and `msg` via flag called `bunyanReadable`.
+
+### Example
+
+```js
+const {
+  CloudLoggingStream,
+} = require("@hrgui/bunyan-cloud-logging-stdout-format");
+const bunyan = require("bunyan");
+
+const logger = bunyan.createLogger({
+  name: "myapp",
+  streams: [new CloudLoggingStream({ bunyanReadable: true }).stream("info")],
+});
+
+logger.info("hello world");
+```
+
+```bash
+node index.js | bunyan
+[2020-09-22T07:19:05.642Z]  INFO: myapp/21716 on harmans-comp.local: hello world (timestamp=2020-09-22T07:19:05.642Z, severity=INFO, message="hello world")
+```
+
+Note that to support both Cloud Logging and bunyan, "hello world" was printed to both `msg` and `message`.
+
 # What's the difference between @google-cloud/logging-bunyan and this?
 
 - https://github.com/googleapis/nodejs-logging-bunyan writes to Google Cloud Logging directly.
