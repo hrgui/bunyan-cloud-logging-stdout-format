@@ -1,3 +1,5 @@
+**No longer maintained as of 10/01/2020 - using Winston instead.**
+
 # @hrgui/bunyan-cloud-logging-stdout-format
 
 Formats Bunyan logs that output to stdout to be easily picked up by Google Cloud Logging.
